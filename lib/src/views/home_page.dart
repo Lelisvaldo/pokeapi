@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../controllers/home_controller.dart';
-import '../services/dio_client.dart';
-import '../services/json_placeholder_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = HomeController(JsonPlaceHolderService(DioClient()));
+  final controller = Modular.get<HomeController>();
   @override
   void initState(){
     super.initState();
