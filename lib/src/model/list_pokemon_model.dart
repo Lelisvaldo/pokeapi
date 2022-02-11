@@ -13,4 +13,9 @@ class ListPokemonModel {
       url: map['url'],
     );
   }
+
+  static ListPokemonModel stub() => ListPokemonModel(
+        name: 'bulbasaur',
+        url: 'https://pokeapi.co/api/v2/pokemon/1/',
+      );
 }
