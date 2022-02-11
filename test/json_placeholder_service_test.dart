@@ -1,25 +1,21 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:pokeapi/src/service/json_placeholder_service.dart';
+import 'package:pokeapi/src/services/http_client_interface.dart';
+import 'package:pokeapi/src/services/json_placeholder_service.dart';
 
 class DioMok extends Mock implements DioForNative {}
 
+class IHttpClientMock extends Mock implements IHttpClient {}
+
 void main() {
   test('Deve retonar todos os Pokemons', () async {
-    final dio = DioMok();
-    final response = Response(
-      requestOptions: RequestOptions(
-        path: '',
-      ),
-      data: jsonDecode(jsonResponse),
-      statusCode: 200,
-    );
-    when(() => dio.get(any())).thenAnswer((_) async => response);
-    final service = JsonPlaceHolderService(dio);
+    final client = IHttpClientMock();
+    when(() => client.get(any()))
+        .thenAnswer((_) async => jsonDecode(jsonResponse));
+    final service = JsonPlaceHolderService(client);
     final pokemonList = await service.getAll();
     expect(pokemonList[0].name, 'bulbasaur');
   });

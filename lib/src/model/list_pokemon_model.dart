@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class ListPokemonModel {
   ListPokemonModel({
     required this.name,
