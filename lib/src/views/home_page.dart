@@ -12,8 +12,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final controller = Modular.get<HomeController>();
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     controller.fetchAllPokemons();
   }
@@ -24,19 +25,31 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Pokemon List'),
       ),
-      body: AnimatedBuilder(
-          animation: controller,
-          builder: (context, widget) {
-            return ListView.builder(
-              itemCount: controller.pokemon.length,
-              itemBuilder: (context, index) {
-                final pokemon = controller.pokemon[index];
-                return ListTile(
-                  title: Text(pokemon.name),
-                );
-              },
-            );
-          }),
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: controller.pokemon.length,
+          itemBuilder: (context, index) => Card(
+            elevation: 6,
+            margin: EdgeInsets.all(10),
+            child: ListTile(
+              leading: CircleAvatar(
+                child: Image.network(
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index + 1}.png'),
+                backgroundColor: Colors.white,
+              ),
+              title: Text(
+                controller.pokemon[index].name.toUpperCase(),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: Icon(Icons.more_horiz),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
